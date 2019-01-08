@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org",lang="pl" >
+<head>
+    <iframe height="0px" th:width="0px" src="https://www.youtube.com/embed/m9tdKwdxnj0?autoplay=1" frameborder="0"  allow=" autoplay"></iframe></p>
+    <title>Knight list</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" />
+
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style1.css}"/>
+
+</head>
+<body>
+
+
+<div class="container">
+
+    Posiadane zloto <span th:text="${playerinformation.gold}"/>
+    <a th:href="${'/checkQuests'}">Aktualizuj zadania </a>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td>IMIĘ</td>
+                <td>POZIOM</td>
+                <td>ZADANIE</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody th:each=" knight : ${knights}">
+        <!--each pozwala przeiterować po kolekcji    dla każdego rycerza spośród rycerzy-->
+        <tr>
+            <td th:text="${knight.name}"></td>
+            <td th:text="${knight.level}"></td>
+            <td>
+                <span th:if="${knight.quest==null}">Brak aktualnego zadania <a th:href="${'/assignQuest?knightId='+knight.id}">Przypisz zadanie</a></span>
+                <span th:if="${knight.quest!=null}" th:text="${knight.quest.description}"/>
+            </td>
+            <td><a th:href="${'/knight?id='+knight.id}">Podgląd</a> </td>
+            <td><a th:href="${'/knight/delete/'+knight.id}">Usuń</a> </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <a href="/newknight">ZREKRUTUJ NOWEGO RYCERZA!</a>
+    </div>
+    <div class="row">
+        <form action="#" th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout" />
+        </form>
+    </div>
+</div>
+</body>
+</html>
